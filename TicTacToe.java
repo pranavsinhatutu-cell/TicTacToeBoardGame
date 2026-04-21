@@ -1,44 +1,34 @@
-import java.util.Scanner;
-
 public class TicTacToe {
 
-    static Scanner sc = new Scanner(System.in);
+    // Board with empty cells '-'
+    static char[][] board = {
+        {'-', '-', '-'},
+        {'-', '-', '-'},
+        {'-', '-', '-'}
+    };
 
     public static void main(String[] args) {
 
-        int slot = getUserSlot();   // take input
-
-        int row = getRowFromSlot(slot);
-        int col = getColFromSlot(slot);
-
-        System.out.println("You selected slot: " + slot);
-        System.out.println("Row: " + row);
-        System.out.println("Column: " + col);
+        // Test cases
+        System.out.println(isValidMove(1, 1)); // true
+        board[1][1] = 'X';                    // fill cell
+        System.out.println(isValidMove(1, 1)); // false
+        System.out.println(isValidMove(3, 0)); // false (out of bounds)
     }
 
-    // UC3 reused: take input (1–9)
-    static int getUserSlot() {
-        int slot;
+    // UC5: Validate move
+    static boolean isValidMove(int row, int col) {
 
-        while (true) {
-            System.out.print("Enter a slot (1-9): ");
-            slot = sc.nextInt();
-
-            if (slot >= 1 && slot <= 9) {
-                return slot;
-            } else {
-                System.out.println("Invalid input! Enter number between 1 and 9.");
-            }
+        // Check boundaries (0–2)
+        if (row < 0 || row > 2 || col < 0 || col > 2) {
+            return false;
         }
-    }
 
-    // UC4: Convert slot → row
-    static int getRowFromSlot(int slot) {
-        return (slot - 1) / 3;
-    }
+        // Check if cell is empty
+        if (board[row][col] != '-') {
+            return false;
+        }
 
-    // UC4: Convert slot → column
-    static int getColFromSlot(int slot) {
-        return (slot - 1) % 3;
+        return true;
     }
 }
